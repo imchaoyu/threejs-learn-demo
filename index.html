@@ -13,6 +13,7 @@
   </style>
   <!--引入three.js三维引擎-->
   <script src="./three.js"></script>
+  <script src="./OrbitControls.js"></script>
 </head>
 
 <body>
@@ -81,7 +82,14 @@
     //间隔20ms周期性调用函数fun,20ms也就是刷新频率是50FPS(1s/20ms)，每秒渲染50次
     // setInterval("render()",20);
     // 使用requestAnimationFrame，提高性能
-    render()
+    // render()
+    function render2() {
+      renderer.render(scene, camera);//执行渲染操作
+      requestAnimationFrame(render2)
+    }
+    render2()
+    var controls = new THREE.OrbitControls(camera);//创建控件对象
+    // controls.addEventListener('change', render2);//监听鼠标、键盘事件
   </script>
 </body>
 
