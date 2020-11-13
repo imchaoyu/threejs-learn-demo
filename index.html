@@ -62,7 +62,27 @@
     renderer.setClearColor(0xb9d3ff, 1); //设置背景颜色
     document.body.appendChild(renderer.domElement); //body元素中插入canvas对象
     //执行渲染操作   指定场景、相机作为参数
-    renderer.render(scene, camera);
+    // renderer.render(scene, camera);
+    // 为了匀速旋转，记录上次时间
+    let T0 = new Date()
+    // 渲染函数
+    function render() {
+      // 为了匀速旋转，记录本次时间
+      let T1 = new Date();
+      // 时间差
+      let t = T1 - T0
+      // 本次时间赋值给上次
+      T0 = T1
+      requestAnimationFrame(render)
+      renderer.render(scene, camera);//执行渲染操作
+      // mesh.rotateY(0.01);//每次绕y轴旋转0.01弧度
+      mesh.rotateY(0.001 * t);//旋转角度0.001弧度每毫秒
+    }
+    //间隔20ms周期性调用函数fun,20ms也就是刷新频率是50FPS(1s/20ms)，每秒渲染50次
+    // setInterval("render()",20);
+    // 使用requestAnimationFrame，提高性能
+    render()
   </script>
 </body>
+
 </html>
